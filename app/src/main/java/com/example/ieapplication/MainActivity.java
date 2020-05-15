@@ -11,6 +11,7 @@ public class MainActivity extends AppCompatActivity {
 
     private ImageButton info_button;
     private ImageButton about_button;
+    private ImageButton summary;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         about_button=findViewById(R.id.imageButton6);
         info_button=findViewById(R.id.imageButton7);
+        summary=findViewById(R.id.imageButton4);
 
         info_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -32,6 +34,13 @@ public class MainActivity extends AppCompatActivity {
                 openActivity3();
             }
         });
+        summary.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openActivity4();
+            }
+        });
+
     }
     public void openActivity3(){
         Intent intent= new Intent(this,About.class);
@@ -39,6 +48,10 @@ public class MainActivity extends AppCompatActivity {
     }
     public void openActivity2(){
         Intent intent= new Intent(this,Info.class);
+        startActivity(intent);
+    }
+    public void openActivity4(){
+        Intent intent= new Intent(this,Analatics.class);
         startActivity(intent);
     }
 }

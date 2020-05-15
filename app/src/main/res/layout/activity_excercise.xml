@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Fitness">
-
+    tools:context=".Excercise">
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="401dp"
@@ -27,9 +26,8 @@
         android:layout_width="182dp"
         android:layout_height="31dp"
         android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
         android:layout_marginTop="20dp"
-        android:text="FOOD"
+        android:text="FITNESS"
         android:textAppearance="@style/TextAppearance.AppCompat.Headline"
         android:textColor="@color/colorAccent"
         android:textStyle="bold"
@@ -52,7 +50,7 @@
 
 
     <ImageButton
-        android:id="@+id/savebutton_food"
+        android:id="@+id/savebutton_exc"
         android:layout_width="48dp"
         android:layout_height="46dp"
         android:layout_marginEnd="40dp"
@@ -101,11 +99,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
-                android:text="Fruits"
+                android:text="Aerobic Activity"
                 android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
 
             <com.warkiz.widget.IndicatorSeekBar
-                android:id="@+id/seekBar2_fit"
+                android:id="@+id/seekBar1_exc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
@@ -120,11 +118,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
-                android:text="Vegetables"
+                android:text="Strenght Training "
                 android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
 
             <com.warkiz.widget.IndicatorSeekBar
-                android:id="@+id/seekBar3_fit"
+                android:id="@+id/seekBar2_exc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="10dp" />
@@ -134,28 +132,29 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
-                android:text="Calcium"
+                android:text="Flexibility Routine"
                 android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
 
             <com.warkiz.widget.IndicatorSeekBar
-                android:id="@+id/seekBar4_fit"
+                android:id="@+id/seekbar3_exc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="10dp" />
 
             <TextView
-                android:id="@+id/textView19"
+                android:id="@+id/textView18"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text=" Diary"
+                android:text="Balance Moves"
                 android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
 
             <com.warkiz.widget.IndicatorSeekBar
-                android:id="@+id/seekBar4_food"
+                android:id="@+id/seekBar4_exc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="10dp" />
         </LinearLayout>
     </ScrollView>
+
 
 </android.support.constraint.ConstraintLayout>
