@@ -3,12 +3,14 @@ package com.example.ieapplication;
 import android.icu.util.IndianCalendar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 
 import com.warkiz.widget.IndicatorSeekBar;
 import com.warkiz.widget.OnSeekChangeListener;
 import com.warkiz.widget.SeekParams;
+import android.widget.Toast;
 
 public class Excercise extends AppCompatActivity {
     IndicatorSeekBar aerobic;
@@ -17,11 +19,20 @@ public class Excercise extends AppCompatActivity {
     IndicatorSeekBar balance;
     ImageButton exc_save;
     DatabaseHelper_exc databaseHelper_exc;
+    private static  final String TAG="DataBaseHelper_Sleep";
+    private static int EXCERCISE_UPDATED;
     int indicator_flexibility,indicator_strength,indicator_aerobic,indicator_balance;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //EXCERCISE_UPDATED=0;
+        if (savedInstanceState != null) {
+            EXCERCISE_UPDATED=savedInstanceState.getInt("UpdateValue");
+        }
+        else {
+            EXCERCISE_UPDATED=0;
+        }
         setContentView(R.layout.activity_excercise);
         databaseHelper_exc=new DatabaseHelper_exc(this);
         aerobic=findViewById(R.id.seekBar1_exc);
@@ -32,7 +43,21 @@ public class Excercise extends AppCompatActivity {
         exc_save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                databaseHelper_exc.insert_exc(indicator_aerobic,indicator_strength,indicator_flexibility,indicator_balance);
+               if(EXCERCISE_UPDATED==0) {
+                   Log.d(TAG,"Excercise entered "+EXCERCISE_UPDATED);
+                   databaseHelper_exc.insert_exc(indicator_aerobic, indicator_strength, indicator_flexibility, indicator_balance);
+                   this.EXCERCISE_UPDATED=1;
+                   Log.d(TAG,"Excercise entered "+EXCERCISE_UPDATED);
+               }
+               else{
+                   Log.d(TAG,"Excercise going to update");
+
+                   Toast.makeText(getApplicationContext(), "This is my Toast message!",
+                           Toast.LENGTH_LONG).show();
+                   databaseHelper_exc.update(indicator_aerobic, indicator_strength, indicator_flexibility, indicator_balance);
+
+               }
+
 
             }
         });
@@ -125,5 +150,17 @@ public class Excercise extends AppCompatActivity {
 
             }
         });
+    }
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+        // Save UI state changes to the savedInstanceState.
+        // This bundle will be passed to onCreate if the process is
+        // killed and restarted.
+        savedInstanceState.putInt("UpdateValue",EXCERCISE_UPDATED);
+        //savedInstanceState.putDouble("myDouble", 1.9);
+        //savedInstanceState.putInt("MyInt", 1);
+        //savedInstanceState.putString("MyString", "Welcome back to Android");
+        // etc.
     }
 }

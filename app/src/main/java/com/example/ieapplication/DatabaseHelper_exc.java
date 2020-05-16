@@ -20,6 +20,7 @@ public class DatabaseHelper_exc extends SQLiteOpenHelper {
     private  static  final  String Flexibility ="flexibility";
     private  static  final  String Balance= "balance";
     private  static  final String col5="sleep_wake_up_times";
+    //private static int EXC_UPDATE=0;
     DataBaseHelper_Sleep dataBaseHelper_sleep;
 
 
@@ -32,9 +33,9 @@ public class DatabaseHelper_exc extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
 
         String DB_PROCESS_CREATE = "create table "
-                + Table_name + "(" + PROCESS_DAY +" INTEGER PRIMARY KEY AUTOINCREMENT ,"
+                + Table_name + "("  //+ PROCESS_DAY +" INTEGER PRIMARY KEY AUTOINCREMENT ,"
                 + PROCESS_DATE
-                + " date, "
+                + " date PRIMARY KEY, "
                 + Aerobic + " INTEGER NOT NULL,"
                 + Strength+" INTEGER NOT NULL,"
                 + Flexibility+" INTEGER NOT NULL,"
@@ -69,6 +70,32 @@ public class DatabaseHelper_exc extends SQLiteOpenHelper {
             String[] columnNames = dbcursor.getColumnNames();
             Log.d(TAG, "MyClass.getView() — get item number "+columnNames[1]);
             long result=db.insert(Table_name, null, contentValues);
+            if(result==-1){
+                return false;
+            }
+            else {
+                return true;
+            }
+        }
+
+    }
+    public boolean update (int aerobic ,int strength,int flexibility,int balance) {
+        Calendar calendar = Calendar.getInstance();
+        String current_date= DateFormat.getDateInstance(DateFormat.FULL).format(calendar.getTime());
+        try (SQLiteDatabase db = this.getWritableDatabase()) {
+
+
+            ContentValues contentValues = new ContentValues();
+            contentValues.put(Aerobic, aerobic);
+            contentValues.put(Flexibility,flexibility);
+            contentValues.put(Strength,strength);
+            contentValues.put(Balance,balance);
+            contentValues.put(PROCESS_DATE,current_date);
+            Log.d(TAG, "MyClass.getView() — get item number ");
+            //Cursor dbcursor= (Cursor) db.query(Table_name, null, null, null, null, null, null);
+            //String[] columnNames = dbcursor.getColumnNames();
+            //Log.d(TAG, "MyClass.getView() — get item number "+columnNames[1]);
+            long result=db.update(Table_name,contentValues,"date="+current_date,null);
             if(result==-1){
                 return false;
             }
