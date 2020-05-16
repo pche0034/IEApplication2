@@ -9,6 +9,7 @@ public class About extends AppCompatActivity {
     private ImageButton fitness_button;
     private ImageButton sleep_button;
     private ImageButton symptoms_button;
+    private ImageButton exc_button;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,6 +29,13 @@ public class About extends AppCompatActivity {
             }
         });
         symptoms_button=findViewById(R.id.imageButton);
+        exc_button=findViewById(R.id.image_button_exc);
+        exc_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openActivityExc();
+            }
+        });
         symptoms_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -49,6 +57,11 @@ public class About extends AppCompatActivity {
     public void openActivityFitness(){
         Intent intent_fitness= new Intent(this,Fitness.class);
         startActivity(intent_fitness);
+
+    }
+    public void openActivityExc(){
+        Intent intent_exc= new Intent(this,Excercise.class);
+        startActivity(intent_exc);
 
     }
 }

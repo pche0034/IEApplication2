@@ -13,6 +13,7 @@ import java.util.Calendar;
 public class DatabaseHelper_Symtoms extends SQLiteOpenHelper {
     private static  final String TAG="DataBaseHelper_Sleep";
     private  static final String Table_name= "user_symptoms";
+    private  static final String PROCESS_DAY= "id";
     private  static final String PROCESS_DATE= "date";
     private static  final String Pain = "pain";
     private static  final String Stiffness = "stiffness";
@@ -29,7 +30,7 @@ public class DatabaseHelper_Symtoms extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
 
         String DB_PROCESS_CREATE = "create table "
-                + Table_name + "(" + PROCESS_DATE +" INTEGER PRIMARY KEY AUTOINCREMENT ,"
+                + Table_name + "(" + PROCESS_DAY +" INTEGER PRIMARY KEY AUTOINCREMENT ,"
                 + PROCESS_DATE
                 + " date, "
                 + Pain + " INTEGER NOT NULL,"

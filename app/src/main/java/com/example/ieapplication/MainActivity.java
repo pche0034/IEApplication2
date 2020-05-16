@@ -11,6 +11,7 @@ public class MainActivity extends AppCompatActivity {
 
     private ImageButton info_button;
     private ImageButton about_button;
+    private ImageButton exc;
     private ImageButton summary;
 
     @Override

@@ -14,6 +14,7 @@ public class DatabaseHelper_exc extends SQLiteOpenHelper {
     private static  final String TAG="DataBaseHelper_Sleep";
     private  static final String Table_name= "user_exc";
     private  static final String PROCESS_DATE= "date";
+    private  static final String PROCESS_DAY= "id";
     private static  final String Aerobic = "Aerobic";
     private static  final String Strength= "strength";
     private  static  final  String Flexibility ="flexibility";
@@ -31,7 +32,7 @@ public class DatabaseHelper_exc extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
 
         String DB_PROCESS_CREATE = "create table "
-                + Table_name + "(" + PROCESS_DATE +" INTEGER PRIMARY KEY AUTOINCREMENT ,"
+                + Table_name + "(" + PROCESS_DAY +" INTEGER PRIMARY KEY AUTOINCREMENT ,"
                 + PROCESS_DATE
                 + " date, "
                 + Aerobic + " INTEGER NOT NULL,"

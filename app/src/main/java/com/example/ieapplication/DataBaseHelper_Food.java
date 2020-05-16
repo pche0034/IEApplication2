@@ -14,6 +14,7 @@ public class DataBaseHelper_Food extends SQLiteOpenHelper {
     private static  final String TAG="DataBaseHelper_Sleep";
     private  static final String Table_name= "user_food";
     private  static final String PROCESS_DATE= "date";
+    private  static final String PROCESS_DAY= "id";
     private static  final String Fruits= "Fruits";
     private static  final String Meat= "Meat";
     private  static  final  String Vegetable ="sleep_staying_asleep";
@@ -30,7 +31,7 @@ public class DataBaseHelper_Food extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
 
         String DB_PROCESS_CREATE = "create table "
-                + Table_name + "(" + PROCESS_DATE +" INTEGER PRIMARY KEY AUTOINCREMENT ,"
+                + Table_name + "(" + PROCESS_DAY +" INTEGER PRIMARY KEY AUTOINCREMENT ,"
                 + PROCESS_DATE
                 + " date, "
                 +Fruits+ " INTEGER NOT NULL,"
@@ -62,7 +63,7 @@ public class DataBaseHelper_Food extends SQLiteOpenHelper {
             contentValues.put(Meat,meat);
             contentValues.put(Diary,diary);
             contentValues.put(PROCESS_DATE,current_date);
-            Log.d(TAG, "MyClass.getView() — get item number ");
+            Log.d(TAG, "MyClass.getView() — get item number in food ");
             Cursor dbcursor= (Cursor) db.query(Table_name, null, null, null, null, null, null);
             String[] columnNames = dbcursor.getColumnNames();
             Log.d(TAG, "MyClass.getView() — get item number "+columnNames[1]);
