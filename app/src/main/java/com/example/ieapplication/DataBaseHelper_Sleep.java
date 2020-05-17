@@ -1,6 +1,7 @@
 package com.example.ieapplication;
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.sqlite.SQLiteConstraintException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.Cursor;
@@ -8,7 +9,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import android.util.Log;
-
+import java.sql.SQLIntegrityConstraintViolationException;
 public class DataBaseHelper_Sleep extends SQLiteOpenHelper {
 
     private static  final String TAG="DataBaseHelper_Sleep";
@@ -31,9 +32,9 @@ public class DataBaseHelper_Sleep extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
 
          String DB_PROCESS_CREATE = "create table "
-                + Table_name + "(" + PROCESS_DAY +" INTEGER PRIMARY KEY AUTOINCREMENT ,"
+                + Table_name + "(" // + PROCESS_DAY +" INTEGER PRIMARY KEY AUTOINCREMENT ,"
                  + PROCESS_DATE
-                + " date, "
+                + " date PRIMARY KEY, "
                 +col1+ " INTEGER NOT NULL)";
          Log.d(TAG,DB_PROCESS_CREATE);
          db.execSQL(DB_PROCESS_CREATE);
@@ -48,7 +49,7 @@ public class DataBaseHelper_Sleep extends SQLiteOpenHelper {
 
 
     }
-    public boolean insert_sleep (int hours) {
+    public void insert_sleep (int hours) {
         Calendar calendar = Calendar.getInstance();
         String current_date= DateFormat.getDateInstance(DateFormat.FULL).format(calendar.getTime());
         try (SQLiteDatabase db = this.getWritableDatabase()) {
@@ -61,12 +62,11 @@ public class DataBaseHelper_Sleep extends SQLiteOpenHelper {
            Cursor dbcursor= (Cursor) db.query(Table_name, null, null, null, null, null, null);
            String[] columnNames = dbcursor.getColumnNames();
            Log.d(TAG, "MyClass.getView() — get item number "+columnNames[1]);
-           long result=db.insert(Table_name, null, contentValues);
-           if(result==-1){
-               return false;
-           }
-           else {
-               return true;
+           try {
+               long result = db.insertOrThrow(Table_name, null, contentValues);
+           }catch (Exception e){
+               db.update(Table_name,contentValues,PROCESS_DATE+"="+"'"+current_date+"'",null);
+               Log.d(TAG,"caught in sleep");
            }
         }
 

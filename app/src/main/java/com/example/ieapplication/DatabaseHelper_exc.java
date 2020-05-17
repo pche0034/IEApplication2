@@ -15,7 +15,7 @@ public class DatabaseHelper_exc extends SQLiteOpenHelper {
     private  static final String Table_name= "user_exc";
     private  static final String PROCESS_DATE= "date";
     private  static final String PROCESS_DAY= "id";
-    private static  final String Aerobic = "Aerobic";
+    private static  final String Aerobic = "aerobic";
     private static  final String Strength= "strength";
     private  static  final  String Flexibility ="flexibility";
     private  static  final  String Balance= "balance";
@@ -69,14 +69,19 @@ public class DatabaseHelper_exc extends SQLiteOpenHelper {
             Cursor dbcursor= (Cursor) db.query(Table_name, null, null, null, null, null, null);
             String[] columnNames = dbcursor.getColumnNames();
             Log.d(TAG, "MyClass.getView() — get item number "+columnNames[1]);
-            long result=db.insert(Table_name, null, contentValues);
-            if(result==-1){
-                return false;
-            }
-            else {
-                return true;
+            try {
+                long result = db.insertOrThrow(Table_name, null, contentValues);
+                if (result == -1) {
+                    return false;
+                } else {
+                    return true;
+                }
+            }catch (Exception e){
+                db.update(Table_name,contentValues,PROCESS_DATE+"="+"'"+current_date+"'",null);
+                Log.d(TAG,"caught in exc");
             }
         }
+        return true;
 
     }
     public boolean update (int aerobic ,int strength,int flexibility,int balance) {

@@ -28,7 +28,13 @@ public class Symptoms extends AppCompatActivity {
         setContentView(R.layout.activity_symptoms);
         indicatorSeekBar_fatigue=findViewById(R.id.seekbar3_fatigue);
         indicatorSeekBar_pain=findViewById(R.id.seekBar1_pain);
+        indicatorSeekBar_pain.setMax(10);
+        indicatorSeekBar_pain.setMin(0);
         indicatorSeekBar_stiffness=findViewById(R.id.seekBar2_stiff);
+        indicatorSeekBar_stiffness.setMax(10);
+        indicatorSeekBar_stiffness.setMin(0);
+        indicatorSeekBar_fatigue.setMin(0);
+        indicatorSeekBar_fatigue.setMax(10);
         saveImage_symptoms=findViewById(R.id.savebutton_symptoms);
         databaseHelperSymtoms=new DatabaseHelper_Symtoms(this);
         indicatorSeekBar_pain.setOnSeekChangeListener(new OnSeekChangeListener() {

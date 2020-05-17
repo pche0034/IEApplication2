@@ -10,7 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.Toast;
-
+import android.util.Log;
 import com.warkiz.widget.IndicatorSeekBar;
 import com.warkiz.widget.OnSeekChangeListener;
 import com.warkiz.widget.SeekParams;
@@ -23,6 +23,7 @@ public class Fitness extends AppCompatActivity {
     IndicatorSeekBar indicatorSeekBar_meat;
     IndicatorSeekBar indicatorSeekBar_diary;
     ImageButton save_button;
+    private static  final String TAG="DataBaseHelper_FIT";
     DataBaseHelper_Food dataBaseHelperFood;
     int indicator_fruit,indicator_vegetable,indicator_diary,indicator_meat;
     @Override
@@ -31,13 +32,23 @@ public class Fitness extends AppCompatActivity {
         dataBaseHelperFood= new DataBaseHelper_Food(this);
         setContentView(R.layout.activity_fitness);
         indicatorSeekBar_fruit= findViewById(R.id.seekBar2_fit);
+        indicatorSeekBar_fruit.setMax(20);
+        indicatorSeekBar_fruit.setMin(0);
         indicatorSeekBar_vegetable=findViewById(R.id.seekBar3_fit);
-        indicatorSeekBar_diary=findViewById(R.id.seekBar4_fit);
-        indicatorSeekBar_meat=findViewById(R.id.seekBar4_food);
+        indicatorSeekBar_vegetable.setMax(20);
+        indicatorSeekBar_vegetable.setMin(0);
+        indicatorSeekBar_meat=findViewById(R.id.seekBar4_fit);
+        indicatorSeekBar_meat.setMax(20);
+        indicatorSeekBar_meat.setMin(0);
+        indicatorSeekBar_diary=findViewById(R.id.seekBar4_food);
+        indicatorSeekBar_diary.setMax(20);
+        indicatorSeekBar_diary.setMin(0);
+
         save_button=findViewById(R.id.savebutton_food);
         save_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.d(TAG,"The values "+indicator_meat);
                 dataBaseHelperFood.insert_food(indicator_fruit,indicator_vegetable,indicator_diary,indicator_meat);
             }
         });
@@ -49,12 +60,13 @@ public class Fitness extends AppCompatActivity {
 
             @Override
             public void onStartTrackingTouch(IndicatorSeekBar seekBar) {
-                indicator_fruit=seekBar.getProgress();
+
 
             }
 
             @Override
             public void onStopTrackingTouch(IndicatorSeekBar seekBar) {
+                indicator_fruit=seekBar.getProgress();
 
             }
 
@@ -93,12 +105,35 @@ public class Fitness extends AppCompatActivity {
 
             @Override
             public void onStartTrackingTouch(IndicatorSeekBar seekBar) {
-                indicator_diary=seekBar.getProgress();
+
 
             }
 
             @Override
             public void onStopTrackingTouch(IndicatorSeekBar seekBar) {
+                indicator_diary=seekBar.getProgress();
+
+            }
+
+            @Override
+            public void onDragging(float progress) {
+
+            }
+        });
+        indicatorSeekBar_meat.setOnSeekChangeListener(new OnSeekChangeListener() {
+            @Override
+            public void onSeeking(SeekParams seekParams) {
+
+            }
+
+            @Override
+            public void onStartTrackingTouch(IndicatorSeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(IndicatorSeekBar seekBar) {
+                indicator_meat=seekBar.getProgress();
 
             }
 

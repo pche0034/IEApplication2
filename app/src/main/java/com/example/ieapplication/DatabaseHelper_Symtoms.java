@@ -30,9 +30,9 @@ public class DatabaseHelper_Symtoms extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
 
         String DB_PROCESS_CREATE = "create table "
-                + Table_name + "(" + PROCESS_DAY +" INTEGER PRIMARY KEY AUTOINCREMENT ,"
+                + Table_name + "("    //+  PROCESS_DAY +" INTEGER PRIMARY KEY AUTOINCREMENT ,"
                 + PROCESS_DATE
-                + " date, "
+                + " date PRIMARY KEY, "
                 + Pain + " INTEGER NOT NULL,"
                 + Stiffness +" INTEGER NOT NULL,"
                 + Fatigue+" INTEGER NOT NULL"
@@ -53,26 +53,32 @@ public class DatabaseHelper_Symtoms extends SQLiteOpenHelper {
     public boolean insert_food (int pain,int stiffness,int fatigue) {
         Calendar calendar = Calendar.getInstance();
         String current_date= DateFormat.getDateInstance(DateFormat.FULL).format(calendar.getTime());
+        Log.d(TAG,current_date);
         try (SQLiteDatabase db = this.getWritableDatabase()) {
 
-
             ContentValues contentValues = new ContentValues();
-            contentValues.put(Pain, pain);
-            contentValues.put(Fatigue,fatigue);
-            contentValues.put(Stiffness,stiffness);
             contentValues.put(PROCESS_DATE,current_date);
+            contentValues.put(Pain, pain);
+            contentValues.put(Fatigue, fatigue);
+            contentValues.put(Stiffness, stiffness);
+            contentValues.put(PROCESS_DATE, current_date);
             Log.d(TAG, "MyClass.getView() — get item number ");
-            Cursor dbcursor= (Cursor) db.query(Table_name, null, null, null, null, null, null);
+            Cursor dbcursor = (Cursor) db.query(Table_name, null, null, null, null, null, null);
             String[] columnNames = dbcursor.getColumnNames();
-            Log.d(TAG, "MyClass.getView() — get item number "+columnNames[1]);
-            long result=db.insert(Table_name, null, contentValues);
-            if(result==-1){
+            Log.d(TAG, "MyClass.getView() — get item number " + columnNames[0]);
+            long result = db.insert(Table_name, null, contentValues);
+
+
+
+            if (result == -1) {
                 return false;
-            }
-            else {
+            } else {
                 return true;
             }
+
+
         }
+
 
     }
     public Cursor getData() {

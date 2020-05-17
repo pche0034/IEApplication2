@@ -13,40 +13,54 @@ import com.warkiz.widget.SeekParams;
 import android.widget.Toast;
 
 public class Excercise extends AppCompatActivity {
-    IndicatorSeekBar aerobic;
+    IndicatorSeekBar aerobic ;
     IndicatorSeekBar strenght;
     IndicatorSeekBar flexibility;
     IndicatorSeekBar balance;
     ImageButton exc_save;
     DatabaseHelper_exc databaseHelper_exc;
     private static  final String TAG="DataBaseHelper_Sleep";
-    private static int EXCERCISE_UPDATED;
+    private static boolean EXCERCISE_UPDATED;
     int indicator_flexibility,indicator_strength,indicator_aerobic,indicator_balance;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
-        //EXCERCISE_UPDATED=0;
+        indicator_aerobic=0;
+        indicator_balance=0;
+        indicator_flexibility=0;
+        indicator_strength=0;
+        //EXCERCISE_UPDATED= false;
         if (savedInstanceState != null) {
-            EXCERCISE_UPDATED=savedInstanceState.getInt("UpdateValue");
+            EXCERCISE_UPDATED=savedInstanceState.getBoolean("UpdateValue");
         }
         else {
-            EXCERCISE_UPDATED=0;
+            Log.d(TAG,"Here is false");
+            EXCERCISE_UPDATED=false;
         }
         setContentView(R.layout.activity_excercise);
         databaseHelper_exc=new DatabaseHelper_exc(this);
         aerobic=findViewById(R.id.seekBar1_exc);
+        aerobic.setMin(0);
+        aerobic.setMax(60);
         strenght=findViewById(R.id.seekBar2_exc);
+        strenght.setMax(60);
+        strenght.setMin(0);
         flexibility=findViewById(R.id.seekbar3_exc);
+        flexibility.setMax(60);
+        flexibility.setMin(0);
         balance=findViewById(R.id.seekBar4_exc);
+        balance.setMax(60);
+        balance.setMin(0);
         exc_save=findViewById(R.id.savebutton_exc);
         exc_save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               if(EXCERCISE_UPDATED==0) {
+               if(!EXCERCISE_UPDATED) {
                    Log.d(TAG,"Excercise entered "+EXCERCISE_UPDATED);
                    databaseHelper_exc.insert_exc(indicator_aerobic, indicator_strength, indicator_flexibility, indicator_balance);
-                   this.EXCERCISE_UPDATED=1;
+                   EXCERCISE_UPDATED= !EXCERCISE_UPDATED;
                    Log.d(TAG,"Excercise entered "+EXCERCISE_UPDATED);
                }
                else{
@@ -157,7 +171,8 @@ public class Excercise extends AppCompatActivity {
         // Save UI state changes to the savedInstanceState.
         // This bundle will be passed to onCreate if the process is
         // killed and restarted.
-        savedInstanceState.putInt("UpdateValue",EXCERCISE_UPDATED);
+        Log.d(TAG,"Here is false 2");
+        savedInstanceState.putBoolean("UpdateValue",EXCERCISE_UPDATED);
         //savedInstanceState.putDouble("myDouble", 1.9);
         //savedInstanceState.putInt("MyInt", 1);
         //savedInstanceState.putString("MyString", "Welcome back to Android");

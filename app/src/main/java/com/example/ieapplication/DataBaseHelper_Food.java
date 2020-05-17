@@ -15,9 +15,9 @@ public class DataBaseHelper_Food extends SQLiteOpenHelper {
     private  static final String Table_name= "user_food";
     private  static final String PROCESS_DATE= "date";
     private  static final String PROCESS_DAY= "id";
-    private static  final String Fruits= "Fruits";
-    private static  final String Meat= "Meat";
-    private  static  final  String Vegetable ="sleep_staying_asleep";
+    private static  final String Fruits= "fruits";
+    private static  final String Meat= "meat";
+    private  static  final  String Vegetable ="veg";
     private  static  final  String Diary="diary";
     private  static  final String col5="sleep_wake_up_times";
     DataBaseHelper_Sleep dataBaseHelper_sleep;
@@ -31,9 +31,9 @@ public class DataBaseHelper_Food extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
 
         String DB_PROCESS_CREATE = "create table "
-                + Table_name + "(" + PROCESS_DAY +" INTEGER PRIMARY KEY AUTOINCREMENT ,"
+                + Table_name + "("       //+ PROCESS_DAY +" INTEGER PRIMARY KEY AUTOINCREMENT ,"
                 + PROCESS_DATE
-                + " date, "
+                + " date PRIMARY KEY, "
                 +Fruits+ " INTEGER NOT NULL,"
                 + Meat+" INTEGER NOT NULL,"
                 + Vegetable+" INTEGER NOT NULL,"
@@ -51,11 +51,10 @@ public class DataBaseHelper_Food extends SQLiteOpenHelper {
 
 
     }
-    public boolean insert_food (int fruits,int vegetable,int diary,int meat) {
+    public Boolean insert_food (int fruits,int vegetable,int diary,int meat) {
         Calendar calendar = Calendar.getInstance();
         String current_date= DateFormat.getDateInstance(DateFormat.FULL).format(calendar.getTime());
         try (SQLiteDatabase db = this.getWritableDatabase()) {
-
 
             ContentValues contentValues = new ContentValues();
             contentValues.put(Fruits, fruits);
@@ -67,15 +66,20 @@ public class DataBaseHelper_Food extends SQLiteOpenHelper {
             Cursor dbcursor= (Cursor) db.query(Table_name, null, null, null, null, null, null);
             String[] columnNames = dbcursor.getColumnNames();
             Log.d(TAG, "MyClass.getView() — get item number "+columnNames[1]);
-            long result=db.insert(Table_name, null, contentValues);
-            if(result==-1){
-                return false;
-            }
-            else {
-                return true;
+            try {
+                long result = db.insertOrThrow(Table_name, null, contentValues);
+                if (result == -1) {
+                    return false;
+                } else {
+                    return true;
+                }
+            }catch (Exception e){
+                db.update(Table_name,contentValues,PROCESS_DATE+"="+"'"+current_date+"'",null);
+                Log.d(TAG,"caught in food");
             }
         }
 
+        return true;
     }
     public Cursor getData() {
         SQLiteDatabase db = this.getReadableDatabase();
